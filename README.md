@@ -9,6 +9,7 @@ Discord, but tiny
 
 # Roadmap
 - Embed discord ✅
+- Remember last loaded webpage via cache
 - Embed vencord
 - Figure out notifications
 - Screenshare
