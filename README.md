@@ -9,9 +9,10 @@ Discord, but tiny
 
 # Roadmap
 - Embed discord ✅
+- Screenshare ✅
+- File upload ✅
+- Test cross-platform
 - Remember last loaded webpage via cache
 - Embed equicord
 - Figure out notifications
-- Screenshare
 - Integrate arRPC server inside wails golang
-- File upload
