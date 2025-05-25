@@ -11,8 +11,11 @@ Discord, but tiny
 - Embed discord ✅
 - Screenshare ✅
 - File upload ✅
+- Inject equicord ✅
+- Make equicord persist
+- Download equicord from remote location, not local
+- Allow foreign assets to be loaded
 - Test cross-platform
 - Remember last loaded webpage via cache
-- Embed equicord
 - Figure out notifications
 - Integrate arRPC server inside wails golang

@@ -1,7 +1,13 @@
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+
+use tauri::{Manager};
+
 #[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
+async fn greet(app: tauri::AppHandle, script: String) -> Result<(), String> {
+    let win = app.get_webview_window("discordMain").unwrap();
+    win
+        .eval(&script)
+        .map_err(|e| format!("Failed to evaluate script: {}", e))?;
+    Ok(())
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
