@@ -11,13 +11,14 @@
     "windows": [
       {
         "title": "TinyCord",
-        "width": 1280,
-        "height": 720,
+        "width": 300,
+        "height": 300,
         "visible": false
       }
     ],
     "security": {
-      "csp": null
+      "csp": null,
+      "dangerousDisableAssetCspModification": true
     }
   },
   "bundle": {
