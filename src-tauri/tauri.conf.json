@@ -10,9 +10,10 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "tinycord",
+        "title": "TinyCord",
         "width": 1280,
-        "height": 720
+        "height": 720,
+        "visible": false
       }
     ],
     "security": {
