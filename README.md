@@ -24,3 +24,4 @@ Nothing except the bare minimum is working as of now
 - Figure out notifications
 - Integrate arRPC server inside wails golang
 - Tray icon
+- Online themes
