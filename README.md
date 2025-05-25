@@ -12,6 +12,7 @@ Discord, but tiny
 - Screenshare ✅
 - File upload ✅
 - Inject equicord ✅
+- Drag and drop
 - Make equicord persist
 - Download equicord from remote location, not local
 - Allow foreign assets to be loaded
