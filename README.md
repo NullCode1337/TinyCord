@@ -1,5 +1,8 @@
 # TinyCord
-Discord, but tiny
+Discord, but tiny and powered by Rust (Tauri)
+
+# STILL EXPERIMENTAL
+Nothing except the bare minimum is working as of now
 
 # Why?
 - We hate electron around here
@@ -20,3 +23,4 @@ Discord, but tiny
 - Remember last loaded webpage via cache
 - Figure out notifications
 - Integrate arRPC server inside wails golang
+- Tray icon
