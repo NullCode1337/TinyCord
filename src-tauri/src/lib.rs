@@ -2,11 +2,9 @@ use tauri::{Manager};
 
 #[tauri::command]
 async fn greet(app: tauri::AppHandle) -> Result<(), String> {
-    let cache_dir = app.path().app_cache_dir()
-    .expect("Could not resolve cache directory");
+    let cache_dir = app.path().app_cache_dir().unwrap();
     let abs_path = cache_dir.join("browser.js");
-    let content = std::fs::read_to_string(abs_path)
-    .expect("Should have been able to read the file");
+    let content = std::fs::read_to_string(abs_path).unwrap();
     let win = app.get_webview_window("discordMain").unwrap();
     win
         .eval(&content)
@@ -21,17 +19,12 @@ fn exit_app() {
 
 fn download(app_handle: &tauri::AppHandle) -> Result<std::path::PathBuf, String> {
     let url = "https://github.com/Equicord/Equicord/releases/download/latest/browser.js";
-    let cache_dir = app_handle.path().app_cache_dir()
-        .expect("Could not resolve cache directory");
-    std::fs::create_dir_all(&cache_dir)
-        .map_err(|e| format!("Failed to create cache directory: {}", e))?;
+    let cache_dir = app_handle.path().app_cache_dir().unwrap();
+    std::fs::create_dir_all(&cache_dir).unwrap();
     let file_path = cache_dir.join("browser.js");
-    let response = reqwest::blocking::get(url)
-        .map_err(|e| format!("Failed to download script: {}", e))?;
-    let content = response.bytes()
-        .map_err(|e| format!("Failed to read response bytes: {}", e))?;
-    std::fs::write(&file_path, &content)
-        .map_err(|e| format!("Failed to write script to cache: {}", e))?;
+    let response = reqwest::blocking::get(url).unwrap();
+    let content = response.bytes().unwrap();
+    std::fs::write(&file_path, &content).unwrap();
     Ok(file_path)
 }
 
@@ -40,11 +33,7 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_fs::init())
         .setup(|app| {
-            match download(app.handle()) {
-                Ok(path) => println!("Script downloaded to: {:?}", path),
-                Err(e) => eprintln!("Failed to download script: {}", e),
-            }
-            
+            download(app.handle()).unwrap();
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
