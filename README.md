@@ -17,6 +17,7 @@ Nothing except the bare minimum is working as of now
 - Inject equicord ✅
 - Download equicord from remote location, not local ✅
 - Make equicord persist on refresh
+- Display a loading screen while equicord is being downloaded
 - Drag and drop
 - Allow foreign assets to be loaded
 - Test cross-platform
