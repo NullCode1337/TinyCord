@@ -1,9 +1,6 @@
 const { invoke } = window.__TAURI__.core;
 const { WebviewWindow } = window.__TAURI__.webviewWindow;
 
-const response = await fetch("browser.js");
-const vencordCode = await response.text();
-
 const webview = new WebviewWindow("discordMain", {
   url: "https://discord.com/channels/@me",
   width: 1280,
@@ -13,7 +10,7 @@ const webview = new WebviewWindow("discordMain", {
 
 webview.once('tauri://created', async () => {
   try {
-    await invoke("greet", {script: vencordCode});
+    await invoke("greet");
   } catch (e) {
     console.log(
       "Injection failed:", e

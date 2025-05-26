@@ -15,13 +15,13 @@ Nothing except the bare minimum is working as of now
 - Screenshare ✅
 - File upload ✅
 - Inject equicord ✅
+- Download equicord from remote location, not local ✅
+- Make equicord persist on refresh
 - Drag and drop
-- Make equicord persist
-- Download equicord from remote location, not local
 - Allow foreign assets to be loaded
 - Test cross-platform
 - Remember last loaded webpage via cache
 - Figure out notifications
 - Integrate arRPC server inside wails golang
 - Tray icon
-- Online themes
+- CSP stuff affecting online themes and stylesheets
