@@ -2,7 +2,9 @@
 Discord, but tiny and powered by Rust (Tauri)
 
 # STILL EXPERIMENTAL
-Nothing except the bare minimum is working as of now
+Current status: WebApp loads, Equicord plugins work, not themes - stylesheet is broken
+
+![image](https://github.com/user-attachments/assets/bca2f7cd-9609-428e-a9c2-9e0651c53508)
 
 # Why?
 - We hate electron around here
