@@ -1,6 +1,11 @@
 use tauri::{Manager};
 
 #[tauri::command]
+fn exit_app() {
+  std::process::exit(0x0);
+}
+
+#[tauri::command]
 async fn inject_equicord(app: tauri::AppHandle) -> Result<(), String> {
     let cache_dir = app.path().app_cache_dir().unwrap();
     let abs_path = cache_dir.join("browser.js");
@@ -10,11 +15,6 @@ async fn inject_equicord(app: tauri::AppHandle) -> Result<(), String> {
         .eval(&content)
         .map_err(|e| format!("Failed to evaluate script: {}", e))?;
     Ok(())
-}
-
-#[tauri::command]
-fn exit_app() {
-  std::process::exit(0x0);
 }
 
 pub fn check_equicord(app: &tauri::AppHandle) -> bool {
