@@ -10,7 +10,7 @@ const webview = new WebviewWindow("discordMain", {
 
 webview.once('tauri://created', async () => {
   try {
-    await invoke("greet");
+    await invoke("inject_equicord");
   } catch (e) {
     console.log(
       "Injection failed:", e
