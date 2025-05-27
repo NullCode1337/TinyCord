@@ -27,3 +27,4 @@ Current status: WebApp loads, Equicord plugins work, not themes - stylesheet is 
 - Integrate arRPC server inside wails golang
 - Tray icon
 - CSP stuff affecting online themes and stylesheets
+- Use currently hidden main window act as Equibop updater, showing the user progress and any timeout errors (because I've noticed timeout errors are happening maybe cuz im being rate limited haha i wonder why)
