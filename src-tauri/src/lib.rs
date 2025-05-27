@@ -1,22 +1,5 @@
 use tauri::{Manager};
 
-#[tauri::command]
-fn exit_app() {
-  std::process::exit(0x0);
-}
-
-#[tauri::command]
-async fn inject_equicord(app: tauri::AppHandle) -> Result<(), String> {
-    let cache_dir = app.path().app_cache_dir().unwrap();
-    let abs_path = cache_dir.join("browser.js");
-    let content = std::fs::read_to_string(abs_path).unwrap();
-    let win = app.get_webview_window("discordMain").unwrap();
-    win
-        .eval(&content)
-        .map_err(|e| format!("Failed to evaluate script: {}", e))?;
-    Ok(())
-}
-
 pub fn check_equicord(app: &tauri::AppHandle) -> bool {
     let cache_dir = app.path().app_cache_dir().unwrap();
     let path = cache_dir.join("browser.js");
@@ -50,13 +33,30 @@ pub fn run() {
                 println!("Equicord out of date, downloading...");
                 download_equicord(app.handle()).unwrap();
             }
+            let cache_dir = app.path().app_cache_dir().unwrap();
+            let abs_path = cache_dir.join("browser.js");
+            let script = std::fs::read_to_string(abs_path).unwrap();
+
+            let window = tauri::window::WindowBuilder::new(app, "TinyCord")
+                .inner_size(1366.0, 768.0)
+                .build()?;
+            window.on_window_event(|event| {
+                if let tauri::WindowEvent::CloseRequested { .. } = event {
+                    std::process::exit(0);
+                }
+            });
+            let webview_builder = tauri::webview::WebviewBuilder::new(
+                "discordMain", 
+                tauri::WebviewUrl::External("https://discord.com/channels/@me".parse().unwrap())
+            )
+              .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36")
+              .initialization_script(script);
+            let webview = window.add_child(webview_builder, tauri::LogicalPosition::new(0, 0), window.inner_size().unwrap());        
+
             Ok(())
         })
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![
-            inject_equicord,
-            exit_app
-        ])
+        .invoke_handler(tauri::generate_handler![ ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
