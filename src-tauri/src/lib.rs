@@ -1,4 +1,4 @@
-use tauri::{Manager};
+use tauri::{webview_version, Manager};
 
 pub fn check_equicord(app: &tauri::AppHandle) -> bool {
     let cache_dir = app.path().app_cache_dir().unwrap();
@@ -37,21 +37,21 @@ pub fn run() {
             let abs_path = cache_dir.join("browser.js");
             let script = std::fs::read_to_string(abs_path).unwrap();
 
-            let window = tauri::window::WindowBuilder::new(app, "TinyCord")
+            let window = tauri::WebviewWindowBuilder::new(
+                app, "discordMain",
+                tauri::WebviewUrl::External("https://discord.com/channels/@me".parse().unwrap())
+            )
                 .inner_size(1366.0, 768.0)
+                .title("TinyCord")
+                .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36")
+                .initialization_script(script)
                 .build()?;
+                
             window.on_window_event(|event| {
                 if let tauri::WindowEvent::CloseRequested { .. } = event {
                     std::process::exit(0);
                 }
             });
-            let webview_builder = tauri::webview::WebviewBuilder::new(
-                "discordMain", 
-                tauri::WebviewUrl::External("https://discord.com/channels/@me".parse().unwrap())
-            )
-              .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36")
-              .initialization_script(script);
-            let webview = window.add_child(webview_builder, tauri::LogicalPosition::new(0, 0), window.inner_size().unwrap());        
 
             Ok(())
         })
