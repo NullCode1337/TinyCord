@@ -18,7 +18,7 @@ Current status: WebApp loads, Equicord plugins work, not themes - stylesheet is 
 - File upload ✅
 - Inject equicord ✅
 - Download equicord from remote location ✅
-- Make equicord persist on refresh
+- Make equicord persist on refresh ✅
 - Drag and drop
 - Allow foreign assets to be loaded
 - Test cross-platform
