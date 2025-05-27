@@ -1,4 +1,4 @@
-use tauri::{webview_version, Manager};
+use tauri::Manager;
 
 pub fn check_equicord(app: &tauri::AppHandle) -> bool {
     let cache_dir = app.path().app_cache_dir().unwrap();
@@ -17,9 +17,9 @@ fn download_equicord(app: &tauri::AppHandle) -> Result<std::path::PathBuf, Strin
     let cache_dir = app.path().app_cache_dir().unwrap();
     let file_path = cache_dir.join("browser.js");
     let response = reqwest::blocking::get(url)
-        .map_err(|e| format!("Failed to download link: {}", e))?;
+        .expect("Failed to download link");
     let content = response.bytes()
-        .map_err(|e| format!("Failed to read response bytes: {}", e))?;
+        .expect("Failed to read response bytes");
     std::fs::write(&file_path, &content).unwrap();
     Ok(file_path)
 }
@@ -46,7 +46,7 @@ pub fn run() {
                 .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36")
                 .initialization_script(script)
                 .build()?;
-                
+
             window.on_window_event(|event| {
                 if let tauri::WindowEvent::CloseRequested { .. } = event {
                     std::process::exit(0);
