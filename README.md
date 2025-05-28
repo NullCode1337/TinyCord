@@ -21,6 +21,7 @@ Current status: WebApp loads, Equicord plugins work, not themes - stylesheet is 
 - Make equicord persist on refresh ✅
 - Drag and drop ✅
 - Cross-platform ✅ (macOS will never be added because I don't have a device)
+- Voice chat + Screenshot in linux broken
 - Remember last loaded webpage via localstorage
 - Figure out notifications
 - Integrate arRPC server inside wails golang
