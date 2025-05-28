@@ -1,8 +1,17 @@
 use tauri::Manager;
 
-pub fn check_equicord(app: &tauri::AppHandle) -> bool {
+fn get_path(app: &tauri::AppHandle) -> std::path::PathBuf {
+    // Browser.js
+    #[cfg(target_os = "linux")]
+    let cache_dir = app.path().runtime_dir().unwrap();
+    #[cfg(target_os = "windows")]
     let cache_dir = app.path().app_cache_dir().unwrap();
-    let path = cache_dir.join("browser.js");
+    
+    cache_dir.join("browser.js")
+}
+
+fn check_equicord(app: &tauri::AppHandle) -> bool {
+    let path = get_path(app);
     if !path.exists() { return false; }
     // If it was updated today, no need to update Equicord
     let metadata = std::fs::metadata(path).expect("Failed to find metadata");
@@ -12,16 +21,14 @@ pub fn check_equicord(app: &tauri::AppHandle) -> bool {
     modified.date_naive() == now.date_naive()
 }
 
-fn download_equicord(app: &tauri::AppHandle) -> Result<std::path::PathBuf, String> {
+fn download_equicord(app: &tauri::AppHandle) {
+    let path = get_path(app);
     let url = "https://github.com/Equicord/Equicord/releases/download/latest/browser.js";
-    let cache_dir = app.path().app_cache_dir().unwrap();
-    let file_path = cache_dir.join("browser.js");
     let response = reqwest::blocking::get(url)
         .expect("Failed to download link");
     let content = response.bytes()
         .expect("Failed to read response bytes");
-    std::fs::write(&file_path, &content).unwrap();
-    Ok(file_path)
+    std::fs::write(path, &content).unwrap();
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -31,11 +38,10 @@ pub fn run() {
         .setup(|app| {
             if !check_equicord(app.handle()) {
                 println!("Equicord out of date, downloading...");
-                download_equicord(app.handle()).unwrap();
+                download_equicord(app.handle());
             }
-            let cache_dir = app.path().app_cache_dir().unwrap();
-            let abs_path = cache_dir.join("browser.js");
-            let script = std::fs::read_to_string(abs_path).unwrap();
+            let path = get_path(app.handle());
+            let script = std::fs::read_to_string(path).unwrap();
 
             let window = tauri::WebviewWindowBuilder::new(
                 app, "discordMain",

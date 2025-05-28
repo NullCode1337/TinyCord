@@ -20,11 +20,10 @@ Current status: WebApp loads, Equicord plugins work, not themes - stylesheet is 
 - Download equicord from remote location ✅
 - Make equicord persist on refresh ✅
 - Drag and drop ✅
-- Allow foreign assets to be loaded
-- Test cross-platform
+- Cross-platform ✅ (macOS will never be added because I don't have a device)
 - Remember last loaded webpage via localstorage
 - Figure out notifications
 - Integrate arRPC server inside wails golang
 - Tray icon
-- CSP stuff affecting online themes and stylesheets
+- CSP stuff affecting online themes and stylesheets (Allow foreign assets to be loaded)
 - Use currently hidden main window act as Equibop updater, showing the user progress and any timeout errors (because I've noticed timeout errors are happening maybe cuz im being rate limited haha i wonder why)
