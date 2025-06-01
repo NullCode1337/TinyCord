@@ -28,3 +28,4 @@ Current status: WebApp loads, Equicord plugins work, not themes - stylesheet is 
 - Tray icon
 - CSP stuff affecting online themes and stylesheets (Allow foreign assets to be loaded)
 - Use currently hidden main window act as Equibop updater, showing the user progress and any timeout errors (because I've noticed timeout errors are happening maybe cuz im being rate limited haha i wonder why)
+- also use currently hidden main window as account switcher, would be handy
